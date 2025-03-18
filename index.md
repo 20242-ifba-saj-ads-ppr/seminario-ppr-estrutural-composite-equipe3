@@ -3,119 +3,121 @@ export_on_save:
   html: true
 ---
 
-# seminario-1
+# Composite (Padrão de Projeto Estrutural)
 
-## Markdown
+### Mapa mental
+Exemplo feito pelo time do Object Pool
 
+## Motivação
 
-- item
-- item
-- item
+Imagine o cenário de desenvolvimento de um app de anotações no formato de mapa mental, onde são criados mapas representados por nós (composições) que podem agrupar outros mapas dentro de si ou anotações simples (folhas). Tanto os mapas (nós) quanto as anotações (folhas) possuem um título que deve ser apresentado em tela, mas como representar objetos que compõem outros e objetos finais de maneira uniforme?
 
+O padrão Composite resolve este problema fazendo com que composições e folhas sejam enxergadas através de uma única interface que representa as duas, dessa maneira, podem ser feitas operações recursivas em problemas que são estruturados em árvore, de uma forma em que ambas sejam tratadas uniformemente.
 
+## Estrutura
 
-1. valor
-2. valor
-3. valor
-
-| title1 | title2 |
-| ------ | ------ |
-| a      | b      |
-
-
-[Markdown](https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-
-## Plantuml
-
-```plantuml {align="center"}
+```plantuml
 @startuml
-title: Animal example
-note "From Duck till Zebra" as n1
-class Animal{
-    +int age
-    +String gender
-    + boolean isMammal()
-    + void mate()
-}
-'para a heranca ficar para baixo
-class Duck extends Animal{
-    +String beakColor
-    +swim()
-    +quack()
-}
-class Fish{
-    -int sizeInFeet
-    -canEat()
-}
-class Zebra{    
-    +bool is_wild
-    +run()
+
+interface MapaMental {
+
+    + getTitulo()
+    + setTitulo()
+
+    + imprimir()
 }
 
-class Duck
-note left: can fly\ncan swim\ncan dive\ncan help in debugging
+class NodeMental {
 
-'para a heranca ficar para o lado
-Animal <|- Zebra 
+    - titulo: String
+    - filhos: List<MapaMental>
 
-'para a heranca ficar para baixo
-Animal <|-- Fish 
+    + anexarFilho()
+    + removerFilho()
+
+    + getTitulo()
+    + setTitulo()
+
+    + imprimir()
+}
+
+class FolhaMental {
+    - titulo: String
+    - descricao: String
+
+    + getDescricao()
+    + setDescricao()
+    + getTitulo()
+    + setTitulo()
+
+    + imprimir()
+}
+
+note left of MapaMental
+imprimir() percorre a estrutura
+em árvore recursivamente
+end note
+
+MapaMental <|-- NodeMental
+MapaMental <- Cliente
+MapaMental <|-- FolhaMental
+
+MapaMental --* NodeMental:filhos
 
 @enduml
 ```
-[PlantUML Class Diagram](https://plantuml.com/class-diagram)
 
-## Mermaid
+## Participantes
 
-```mermaid {align="center"}
----
-title: Animal example
----
-classDiagram
-    note "From Duck till Zebra"
-    Animal <|-- Duck
-    note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
-    Animal <|-- Fish
-    Animal <|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-        +String beakColor
-        +swim()
-        +quack()
-    }
-    class Fish{
-        -int sizeInFeet
-        -canEat()
-    }
-    class Zebra{
-        +bool is_wild
-        +run()
-    }
+- **MapaMental (Componente)** 
+    - Declara a interface para os objetos na composição (Node e Folha);
+    - Implementa comportamento-padrão para interface comum a todas as classes, conforme apropriado;
+- **NodeMental (Composição)**
+    - representa objetos-folha na composição. Uma folha não tem filhos;
+    - define comportamento para objetos primitivos na composição.
+- **FolhaMental (Folha)**
+  - define comportamento para componentes que têm filhos;
+  - armazena os componentes-filho;
+  - implementa as operações relacionadas com os filhos presentes na interface de ```MapaMental```.
+- **Cliente**
+  - manipula objetos na composição através da interface de ```MapaMental```.
 
-```
+## Implementação
 
-[Mermaid Class Diagram](https://mermaid.js.org/syntax/classDiagram.html)
+### MapaMental (Componente)
+@import "./src/mapa_mental/MapaMental.java"
 
+### NodeMental (Composição)
+@import "./src/mapa_mental/NodeMental.java"
 
-## Markdown Preview Enhanced
+### FolhaMental (Folha)
+@import "./src/mapa_mental/FolhaMental.java"
 
-[Markdown Preview Enhanced](https://shd101wyy.github.io/markdown-preview-enhanced/#/)
+### Cliente
+@import "./src/App.java"
 
+## Aplicabilidade
 
-@import "src/Classe.java"
+Quando utilizar o padrão **Composite**:
+> * Quando quiser representar hierarquias partes-todo de objetos;
+> * Quando quiser que os clientes sejam capazes de ignorar a diferença entre composições
+de objetos e objetos individuais. Os clientes tratarão todos os objetos na estrutura
+composta de maneira uniforme.
 
-### HTML Export
+## Colaborações
 
-[html-export](https://shd101wyy.github.io/markdown-preview-enhanced/#/html?id=html-export)
+- Os clientes usam a interface ```MapaMental``` para interagir com os objetos na estrutura composta. Se o receptor é uma ```FolhaMental```, então a solicitação é tratada diretamente. Se o receptor é um ```NodeMental```, ele normalmente repassa as solicitações para os seus componentes-filhos, executando operações adicionais antes e/ou depois do repasse.
+  
+## Consequências
 
+### Hierarquias compostas
+Cria estruturas com objetos primitivos e compostos que podem se combinar recursivamente. O código do cliente pode tratar tanto objetos simples quanto compostos da mesma forma.
 
-Right click at the preview, click HTML tab.
-Then choose:
+### Simplicidade para o cliente
+O cliente pode lidar de forma uniforme com objetos individuais ou compostos, sem se preocupar se está tratando com uma folha ou um componente composto.
 
-HTML (offline) Choose this option if you are only going to use this html file locally.
-HTML (cdn hosted) Choose this option if you want to deploy your html file remotely.
+### Facilidade para adicionar novos componentes
+Novos tipos de componentes (Composite ou Leaf) são automaticamente compatíveis com a estrutura existente e o código do cliente, sem a necessidade de modificações.
 
-![screen shot 2017-07-14 at 1 14 28 am](https://user-images.githubusercontent.com/1908863/28200455-d5a12d60-6831-11e7-8572-91d3845ce8cf.png)
+### Excesso de generalidade
+A adição de novos componentes pode dificultar a imposição de restrições à composição, exigindo verificações e testes em tempo de execução para garantir conformidade.

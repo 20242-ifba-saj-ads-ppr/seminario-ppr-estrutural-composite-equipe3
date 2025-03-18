@@ -3,10 +3,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
       
       
-      <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.min.js"></script>
+      
       
       
       <style>
@@ -24,120 +24,213 @@
     
       <div class="crossnote markdown-preview  ">
       
-<h1 id="seminario-1">seminario-1 </h1>
-<h2 id="markdown">Markdown </h2>
+<h1 id="composite-padrão-de-projeto-estrutural">Composite (Padrão de Projeto Estrutural) </h1>
+<h3 id="mapa-mental">Mapa mental </h3>
+<p>Exemplo feito pelo time do Object Pool</p>
+<h2 id="motivação">Motivação </h2>
+<p>Imagine o cenário de desenvolvimento de um app de anotações no formato de mapa mental, onde são criados mapas representados por nós (composições) que podem agrupar outros mapas dentro de si ou anotações simples (folhas). Tanto os mapas (nós) quanto as anotações (folhas) possuem um título que deve ser apresentado em tela, mas como representar objetos que compõem outros e objetos finais de maneira uniforme?</p>
+<p>O padrão Composite resolve este problema fazendo com que composições e folhas sejam enxergadas através de uma única interface que representa as duas, dessa maneira, podem ser feitas operações recursivas em problemas que são estruturados em árvore, de uma forma em que ambas sejam tratadas uniformemente.</p>
+<h2 id="estrutura">Estrutura </h2>
+<p class="plantuml"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" data-diagram-type="CLASS" height="398px" preserveAspectRatio="none" style="width:553px;height:398px;background:#FFFFFF;" version="1.1" viewBox="0 0 553 398" width="553px" zoomAndPan="magnify"><defs></defs><g><!--class MapaMental--><g class="entity" data-entity="MapaMental" data-source-line="1" data-uid="ent0002" id="entity_MapaMental"><rect fill="#F1F1F1" height="113.1875" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.6475" x="263.22" y="7"></rect><ellipse cx="278.22" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M274.1419,18.7656 L274.1419,16.6094 L281.5325,16.6094 L281.5325,18.7656 L279.0638,18.7656 L279.0638,26.8438 L281.5325,26.8438 L281.5325,29 L274.1419,29 L274.1419,26.8438 L276.6106,26.8438 L276.6106,18.7656 L274.1419,18.7656 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="85.6475" x="292.22" y="27.8467">MapaMental</text><line style="stroke:#181818;stroke-width:0.5;" x1="264.22" x2="379.8675" y1="39" y2="39"></line><line style="stroke:#181818;stroke-width:0.5;" x1="264.22" x2="379.8675" y1="47" y2="47"></line><ellipse cx="274.22" cy="60.6484" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.1719" x="283.22" y="63.9951">getTitulo()</text><ellipse cx="274.22" cy="76.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71.5791" x="283.22" y="80.292">setTitulo()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.4502" x="283.22" y="96.5889">&nbsp;</text><ellipse cx="274.22" cy="109.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.2666" x="283.22" y="112.8857">imprimir()</text></g><!--class NodeMental--><g class="entity" data-entity="NodeMental" data-source-line="9" data-uid="ent0003" id="entity_NodeMental"><rect fill="#F1F1F1" height="194.6719" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="206.1885" x="160.95" y="197.19"></rect><ellipse cx="217.7635" cy="213.19" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M220.7322,218.8306 Q220.1541,219.1275 219.5135,219.2681 Q218.8729,219.4244 218.1697,219.4244 Q215.6697,219.4244 214.3416,217.7838 Q213.0291,216.1275 213.0291,213.0025 Q213.0291,209.8775 214.3416,208.2213 Q215.6697,206.565 218.1697,206.565 Q218.8729,206.565 219.5135,206.7213 Q220.1697,206.8775 220.7322,207.1744 L220.7322,209.8931 Q220.1072,209.315 219.5135,209.0494 Q218.9197,208.7681 218.2947,208.7681 Q216.951,208.7681 216.2635,209.8463 Q215.576,210.9088 215.576,213.0025 Q215.576,215.0963 216.2635,216.1744 Q216.951,217.2369 218.2947,217.2369 Q218.9197,217.2369 219.5135,216.9713 Q220.1072,216.69 220.7322,216.1119 L220.7322,218.8306 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.0615" x="238.2635" y="218.0367">NodeMental</text><line style="stroke:#181818;stroke-width:0.5;" x1="161.95" x2="366.1385" y1="229.19" y2="229.19"></line><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="168.95" y="239.8384"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.1445" x="180.95" y="246.1851">titulo: String</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="168.95" y="256.1353"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="180.1885" x="180.95" y="262.482">filhos: List&lt;MapaMental&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="161.95" x2="366.1385" y1="269.7838" y2="269.7838"></line><ellipse cx="171.95" cy="283.4322" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="92.8799" x="180.95" y="286.7789">anexarFilho()</text><ellipse cx="171.95" cy="299.7291" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103.4209" x="180.95" y="303.0757">removerFilho()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.4502" x="180.95" y="319.3726">&nbsp;</text><ellipse cx="171.95" cy="332.3228" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.1719" x="180.95" y="335.6695">getTitulo()</text><ellipse cx="171.95" cy="348.6197" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71.5791" x="180.95" y="351.9664">setTitulo()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.4502" x="180.95" y="368.2632">&nbsp;</text><ellipse cx="171.95" cy="381.2134" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.2666" x="180.95" y="384.5601">imprimir()</text></g><!--class FolhaMental--><g class="entity" data-entity="FolhaMental" data-source-line="23" data-uid="ent0004" id="entity_FolhaMental"><rect fill="#F1F1F1" height="178.375" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143.9268" x="402.08" y="205.34"></rect><ellipse cx="428.9795" cy="221.34" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M431.9483,226.9806 Q431.3701,227.2775 430.7295,227.4181 Q430.0889,227.5744 429.3858,227.5744 Q426.8858,227.5744 425.5576,225.9338 Q424.2451,224.2775 424.2451,221.1525 Q424.2451,218.0275 425.5576,216.3713 Q426.8858,214.715 429.3858,214.715 Q430.0889,214.715 430.7295,214.8713 Q431.3858,215.0275 431.9483,215.3244 L431.9483,218.0431 Q431.3233,217.465 430.7295,217.1994 Q430.1358,216.9181 429.5108,216.9181 Q428.167,216.9181 427.4795,217.9963 Q426.792,219.0588 426.792,221.1525 Q426.792,223.2463 427.4795,224.3244 Q428.167,225.3869 429.5108,225.3869 Q430.1358,225.3869 430.7295,225.1213 Q431.3233,224.84 431.9483,224.2619 L431.9483,226.9806 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85.4834" x="445.6238" y="226.1867">FolhaMental</text><line style="stroke:#181818;stroke-width:0.5;" x1="403.08" x2="545.0068" y1="237.34" y2="237.34"></line><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="410.08" y="247.9884"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.1445" x="422.08" y="254.3351">titulo: String</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="410.08" y="264.2853"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117.9268" x="422.08" y="270.632">descricao: String</text><line style="stroke:#181818;stroke-width:0.5;" x1="403.08" x2="545.0068" y1="277.9338" y2="277.9338"></line><ellipse cx="413.08" cy="291.5822" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102.7852" x="422.08" y="294.9289">getDescricao()</text><ellipse cx="413.08" cy="307.8791" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="101.1924" x="422.08" y="311.2257">setDescricao()</text><ellipse cx="413.08" cy="324.1759" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73.1719" x="422.08" y="327.5226">getTitulo()</text><ellipse cx="413.08" cy="340.4728" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="71.5791" x="422.08" y="343.8195">setTitulo()</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.4502" x="422.08" y="360.1164">&nbsp;</text><ellipse cx="413.08" cy="373.0666" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70.2666" x="422.08" y="376.4132">imprimir()</text></g><g class="entity" data-entity="GMN5" data-source-line="36" data-uid="ent0006" id="entity_GMN5"><path d="M6,43.46 L6,83.7256 A0,0 0 0 0 6,83.7256 L228.0938,83.7256 A0,0 0 0 0 228.0938,83.7256 L228.0938,67.59 L262.76,63.59 L228.0938,59.59 L228.0938,53.46 L218.0938,43.46 L6,43.46 A0,0 0 0 0 6,43.46" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M218.0938,43.46 L218.0938,53.46 L228.0938,53.46 L218.0938,43.46" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="201.0938" x="12" y="60.5269">imprimir() percorre a estrutura</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="173.3418" x="12" y="75.6597">em árvore recursivamente</text></g><!--class Cliente--><g class="entity" data-entity="Cliente" data-source-line="41" data-uid="ent0009" id="entity_Cliente"><rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.1436" x="415.48" y="39.59"></rect><ellipse cx="430.48" cy="55.59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M433.4488,61.2306 Q432.8706,61.5275 432.23,61.6681 Q431.5894,61.8244 430.8863,61.8244 Q428.3863,61.8244 427.0581,60.1838 Q425.7456,58.5275 425.7456,55.4025 Q425.7456,52.2775 427.0581,50.6213 Q428.3863,48.965 430.8863,48.965 Q431.5894,48.965 432.23,49.1213 Q432.8863,49.2775 433.4488,49.5744 L433.4488,52.2931 Q432.8238,51.715 432.23,51.4494 Q431.6363,51.1681 431.0113,51.1681 Q429.6675,51.1681 428.98,52.2463 Q428.2925,53.3088 428.2925,55.4025 Q428.2925,57.4963 428.98,58.5744 Q429.6675,59.6369 431.0113,59.6369 Q431.6363,59.6369 432.23,59.3713 Q432.8238,59.09 433.4488,58.5119 L433.4488,61.2306 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="49.1436" x="444.48" y="60.4367">Cliente</text><line style="stroke:#181818;stroke-width:0.5;" x1="416.48" x2="495.6236" y1="71.59" y2="71.59"></line><line style="stroke:#181818;stroke-width:0.5;" x1="416.48" x2="495.6236" y1="79.59" y2="79.59"></line></g><!--reverse link MapaMental to NodeMental--><g class="link" data-entity-1="MapaMental" data-entity-2="NodeMental" data-source-line="40" data-uid="lnk8" id="link_MapaMental_NodeMental"><path codeline="40" d="M289.6388,137.2737 C285.8088,147.0237 288.81,140.41 286.05,150.19 C281.84,165.09 278.38,181.1 275.56,196.83" fill="none" id="MapaMental-backto-NodeMental" style="stroke:#181818;stroke-width:1;"></path><polygon fill="none" points="296.22,120.52,284.0542,135.08,295.2234,139.4675,296.22,120.52" style="stroke:#181818;stroke-width:1;"></polygon></g><!--link MapaMental to NodeMental--><g class="link" data-entity-1="MapaMental" data-entity-2="NodeMental" data-source-line="44" data-uid="lnk12" id="link_MapaMental_NodeMental"><path codeline="44" d="M307.86,120.6 C302.02,143.63 298.0351,159.347 291.4351,185.417" fill="none" id="MapaMental-to-NodeMental" style="stroke:#181818;stroke-width:1;"></path><polygon fill="#181818" points="288.49,197.05,293.8402,192.2152,291.4351,185.417,286.0849,190.2518,288.49,197.05" style="stroke:#181818;stroke-width:1;"></polygon><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="34.7661" x="301.05" y="163.2569">filhos</text></g><!--reverse link MapaMental to Cliente--><g class="link" data-entity-1="MapaMental" data-entity-2="Cliente" data-source-line="41" data-uid="lnk10" id="link_MapaMental_Cliente"><path codeline="41" d="M387.2,63.59 C398.5,63.59 403.81,63.59 415.11,63.59" fill="none" id="MapaMental-backto-Cliente" style="stroke:#181818;stroke-width:1;"></path><polygon fill="#181818" points="381.2,63.59,390.2,67.59,386.2,63.59,390.2,59.59,381.2,63.59" style="stroke:#181818;stroke-width:1;"></polygon></g><!--reverse link MapaMental to FolhaMental--><g class="link" data-entity-1="MapaMental" data-entity-2="FolhaMental" data-source-line="42" data-uid="lnk11" id="link_MapaMental_FolhaMental"><path codeline="42" d="M369.1901,135.5932 C386.0701,161.0032 396.47,176.68 415.33,205.1" fill="none" id="MapaMental-backto-FolhaMental" style="stroke:#181818;stroke-width:1;"></path><polygon fill="none" points="359.23,120.6,364.1923,138.9133,374.1878,132.2732,359.23,120.6" style="stroke:#181818;stroke-width:1;"></polygon></g><!--SRC=[fP5DJiCm48NtFiKi-P4l45LiG5rHDd21aJDfH_9FD9v4I2s7uInSZBIajGCI2_3oyxmtptuSbQH3Hx317ZSK5JtiZO7ftCAMz8LryEdgUYQv8ZFYq0i7becy6UCyvWnFgQMbcGKzwHfuLk6udM77VfTo0u-STLKYt9tDCT8holeuTSaW5D985_ZVhElaT-NblsHjAJjXXuMNrG_dkthxJ_Y7a34fWQTE8NLLIQPCGK_YaWW10cMLGGT1Gm4-tcLC4nPoWsGUCKnICXHREBeQKtM-EbXRrRQuid3l-IJzBgZ-Rk5cxKrbrdor_0a0]--></g></svg></p><h2 id="participantes">Participantes </h2>
 <ul>
-<li>item</li>
-<li>item</li>
-<li>item</li>
+<li><strong>MapaMental (Componente)</strong>
+<ul>
+<li>Declara a interface para os objetos na composição (Node e Folha);</li>
+<li>Implementa comportamento-padrão para interface comum a todas as classes, conforme apropriado;</li>
 </ul>
-<ol>
-<li>valor</li>
-<li>valor</li>
-<li>valor</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>title1</th>
-<th>title2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>a</td>
-<td>b</td>
-</tr>
-</tbody>
-</table>
-<p><a href="https://docs.github.com/pt/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Markdown</a></p>
-<h2 id="plantuml">Plantuml </h2>
-<p align="center" class="plantuml"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentstyletype="text/css" data-diagram-type="CLASS" height="321px" preserveAspectRatio="none" style="width:784px;height:321px;background:#FFFFFF;" version="1.1" viewBox="0 0 784 321" width="784px" zoomAndPan="magnify"><title>Animal example</title><defs></defs><g><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="126.1846" x="321.9583" y="22.9951">Animal example</text><g id="elem_n1"><path d="M622.94,88.3269 L622.94,113.4597 L777.1011,113.4597 L777.1011,98.3269 L767.1011,88.3269 L622.94,88.3269 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M767.1011,88.3269 L767.1011,98.3269 L777.1011,98.3269 L767.1011,88.3269 " fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="133.1611" x="628.94" y="105.3938">From Duck till Zebra</text></g><!--class Animal--><g id="elem_Animal"><rect codeline="3" fill="#F1F1F1" height="113.1875" id="Animal" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="168.9326" x="277.56" y="44.2969"></rect><ellipse cx="333.5532" cy="60.2969" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M336.5219,65.9375 Q335.9438,66.2344 335.3032,66.375 Q334.6625,66.5313 333.9594,66.5313 Q331.4594,66.5313 330.1313,64.8906 Q328.8188,63.2344 328.8188,60.1094 Q328.8188,56.9844 330.1313,55.3281 Q331.4594,53.6719 333.9594,53.6719 Q334.6625,53.6719 335.3032,53.8281 Q335.9594,53.9844 336.5219,54.2813 L336.5219,57 Q335.8969,56.4219 335.3032,56.1563 Q334.7094,55.875 334.0844,55.875 Q332.7407,55.875 332.0532,56.9531 Q331.3657,58.0156 331.3657,60.1094 Q331.3657,62.2031 332.0532,63.2813 Q332.7407,64.3438 334.0844,64.3438 Q334.7094,64.3438 335.3032,64.0781 Q335.8969,63.7969 336.5219,63.2188 L336.5219,65.9375 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48.4463" x="354.0532" y="65.1436">Animal</text><line style="stroke:#181818;stroke-width:0.5;" x1="278.56" x2="445.4926" y1="76.2969" y2="76.2969"></line><ellipse cx="288.56" cy="89.9453" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48.7813" x="297.56" y="93.292">int age</text><ellipse cx="288.56" cy="106.2422" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="95.8604" x="297.56" y="109.5889">String gender</text><line style="stroke:#181818;stroke-width:0.5;" x1="278.56" x2="445.4926" y1="116.8906" y2="116.8906"></line><ellipse cx="288.56" cy="130.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="142.9326" x="297.56" y="133.8857">boolean isMammal()</text><ellipse cx="288.56" cy="146.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81.3203" x="297.56" y="150.1826">void mate()</text></g><!--class Duck--><g id="elem_Duck"><rect codeline="24" fill="#F1F1F1" height="96.8906" id="Duck" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.9697" x="207.54" y="217.4869"></rect><ellipse cx="257.0459" cy="233.4869" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M260.0146,239.1275 Q259.4365,239.4244 258.7959,239.565 Q258.1552,239.7213 257.4521,239.7213 Q254.9521,239.7213 253.624,238.0806 Q252.3115,236.4244 252.3115,233.2994 Q252.3115,230.1744 253.624,228.5181 Q254.9521,226.8619 257.4521,226.8619 Q258.1552,226.8619 258.7959,227.0181 Q259.4521,227.1744 260.0146,227.4713 L260.0146,230.19 Q259.3896,229.6119 258.7959,229.3463 Q258.2021,229.065 257.5771,229.065 Q256.2334,229.065 255.5459,230.1431 Q254.8584,231.2056 254.8584,233.2994 Q254.8584,235.3931 255.5459,236.4713 Q256.2334,237.5338 257.5771,237.5338 Q258.2021,237.5338 258.7959,237.2681 Q259.3896,236.9869 260.0146,236.4088 L260.0146,239.1275 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35.458" x="277.5459" y="238.3336">Duck</text><line style="stroke:#181818;stroke-width:0.5;" x1="208.54" x2="349.5097" y1="249.4869" y2="249.4869"></line><ellipse cx="218.54" cy="263.1353" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116.9697" x="227.54" y="266.482">String beakColor</text><line style="stroke:#181818;stroke-width:0.5;" x1="208.54" x2="349.5097" y1="273.7838" y2="273.7838"></line><ellipse cx="218.54" cy="287.4322" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="47.1953" x="227.54" y="290.7789">swim()</text><ellipse cx="218.54" cy="303.7291" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53.0674" x="227.54" y="307.0757">quack()</text></g><!--class Fish--><g id="elem_Fish"><rect codeline="15" fill="#F1F1F1" height="80.5938" id="Fish" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.6182" x="385.22" y="225.6369"></rect><ellipse cx="426.999" cy="241.6369" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M429.9677,247.2775 Q429.3896,247.5744 428.749,247.715 Q428.1083,247.8712 427.4052,247.8712 Q424.9052,247.8712 423.5771,246.2306 Q422.2646,244.5744 422.2646,241.4494 Q422.2646,238.3244 423.5771,236.6681 Q424.9052,235.0119 427.4052,235.0119 Q428.1083,235.0119 428.749,235.1681 Q429.4052,235.3244 429.9677,235.6212 L429.9677,238.34 Q429.3427,237.7619 428.749,237.4962 Q428.1552,237.215 427.5302,237.215 Q426.1865,237.215 425.499,238.2931 Q424.8115,239.3556 424.8115,241.4494 Q424.8115,243.5431 425.499,244.6212 Q426.1865,245.6837 427.5302,245.6837 Q428.1552,245.6837 428.749,245.4181 Q429.3427,245.1369 429.9677,244.5587 L429.9677,247.2775 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28.1094" x="446.9498" y="246.4836">Fish</text><line style="stroke:#181818;stroke-width:0.5;" x1="386.22" x2="503.8382" y1="257.6369" y2="257.6369"></line><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="393.22" y="268.2853"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93.6182" x="405.22" y="274.632">int sizeInFeet</text><line style="stroke:#181818;stroke-width:0.5;" x1="386.22" x2="503.8382" y1="281.9338" y2="281.9338"></line><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="393.22" y="292.5822"></rect><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58.9873" x="405.22" y="298.9289">canEat()</text></g><!--class Zebra--><g id="elem_Zebra"><rect codeline="19" fill="#F1F1F1" height="80.5938" id="Zebra" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.6572" x="481.7" y="60.5969"></rect><ellipse cx="511.6542" cy="76.5969" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"></ellipse><path d="M514.6229,82.2375 Q514.0448,82.5344 513.4042,82.675 Q512.7635,82.8312 512.0604,82.8312 Q509.5604,82.8312 508.2323,81.1906 Q506.9198,79.5344 506.9198,76.4094 Q506.9198,73.2844 508.2323,71.6281 Q509.5604,69.9719 512.0604,69.9719 Q512.7635,69.9719 513.4042,70.1281 Q514.0604,70.2844 514.6229,70.5812 L514.6229,73.3 Q513.9979,72.7219 513.4042,72.4562 Q512.8104,72.175 512.1854,72.175 Q510.8417,72.175 510.1542,73.2531 Q509.4667,74.3156 509.4667,76.4094 Q509.4667,78.5031 510.1542,79.5812 Q510.8417,80.6437 512.1854,80.6437 Q512.8104,80.6437 513.4042,80.3781 Q513.9979,80.0969 514.6229,79.5187 L514.6229,82.2375 Z " fill="#000000"></path><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="41.4258" x="528.9773" y="81.4436">Zebra</text><line style="stroke:#181818;stroke-width:0.5;" x1="482.7" x2="587.3572" y1="92.5969" y2="92.5969"></line><ellipse cx="492.7" cy="106.2453" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80.6572" x="501.7" y="109.592">bool is_wild</text><line style="stroke:#181818;stroke-width:0.5;" x1="482.7" x2="587.3572" y1="116.8937" y2="116.8937"></line><ellipse cx="492.7" cy="130.5422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"></ellipse><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34.4258" x="501.7" y="133.8889">run()</text></g><g id="elem_GMN8"><path d="M6,230.6669 L6,301.1981 A0,0 0 0 0 6,301.1981 L172.0503,301.1981 A0,0 0 0 0 172.0503,301.1981 L172.0503,269.9269 L207.05,265.9269 L172.0503,261.9269 L172.0503,240.6669 L162.0503,230.6669 L6,230.6669 A0,0 0 0 0 6,230.6669 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><path d="M162.0503,230.6669 L162.0503,240.6669 L172.0503,240.6669 L162.0503,230.6669 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"></path><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43.3672" x="12" y="247.7338">can fly</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="61.166" x="12" y="262.8666">can swim</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="55.0405" x="12" y="277.9994">can dive</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="145.0503" x="12" y="293.1322">can help in debugging</text></g><!--reverse link Animal to Duck--><g id="link_Animal_Duck"><path d="M325.5244,173.5882 C315.6644,192.9582 312.86,198.4669 303.35,217.1369 " fill="none" id="Animal-backto-Duck" style="stroke:#181818;stroke-width:1;"></path><polygon fill="none" points="333.69,157.5469,320.1773,170.8663,330.8715,176.31,333.69,157.5469" style="stroke:#181818;stroke-width:1;"></polygon></g><!--reverse link Animal to Zebra--><g id="link_Animal_Zebra"><path codeline="28" d="M464.84,100.8969 C476.32,100.8969 469.8,100.8969 481.28,100.8969 " fill="none" id="Animal-backto-Zebra" style="stroke:#181818;stroke-width:1;"></path><polygon fill="none" points="446.84,100.8969,464.84,106.8969,464.84,94.8969,446.84,100.8969" style="stroke:#181818;stroke-width:1;"></polygon></g><!--reverse link Animal to Fish--><g id="link_Animal_Fish"><path codeline="31" d="M398.5222,173.5899 C409.8322,195.8199 414.45,204.8769 424.8,225.2069 " fill="none" id="Animal-backto-Fish" style="stroke:#181818;stroke-width:1;"></path><polygon fill="none" points="390.36,157.5469,393.1746,176.3106,403.8699,170.8691,390.36,157.5469" style="stroke:#181818;stroke-width:1;"></polygon></g><!--SRC=[XL6nJiGm3Dtp5TOjW507rXCB0YhTmCI6a93RkgrLDob9UbSu-7VI98WJ0sHodlFydbyyUw4jt6WUKO0M72SXfOqds9JMZ70trmDu5e4dgYnk01teArKBEfTfHmNXNBBsW1sbowEth3leI3Ta4mILCKAeWTq3Ze5tVf4RUyCDZEWf89_gR4ABWD2JHLqZj5oZXGXMo8l9sj4OBJue_3AIjIl2uTQ8oVBkmEEtukkCzH35qgoINP_8nRg5utVQwPB89wn6VO_-v7sCuhZsqhnrix3Mou6bIOYTTNn_OZQbAjJwBOI9qChRirwBrLcg6jvJgdgI2JWWLCrT5zPHV-LYGB0nAl_YzKUH78BwFymVJX5Z-080]--></g></svg></p><p><a href="https://plantuml.com/class-diagram">PlantUML Class Diagram</a></p>
-<h2 id="mermaid">Mermaid </h2>
-<div align="center" class="mermaid">---
-title: Animal example
----
-classDiagram
-    note "From Duck till Zebra"
-    Animal &lt;|-- Duck
-    note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
-    Animal &lt;|-- Fish
-    Animal &lt;|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-        +String beakColor
-        +swim()
-        +quack()
-    }
-    class Fish{
-        -int sizeInFeet
-        -canEat()
-    }
-    class Zebra{
-        +bool is_wild
-        +run()
-    }
+</li>
+<li><strong>NodeMental (Composição)</strong>
+<ul>
+<li>representa objetos-folha na composição. Uma folha não tem filhos;</li>
+<li>define comportamento para objetos primitivos na composição.</li>
+</ul>
+</li>
+<li><strong>FolhaMental (Folha)</strong>
+<ul>
+<li>define comportamento para componentes que têm filhos;</li>
+<li>armazena os componentes-filho;</li>
+<li>implementa as operações relacionadas com os filhos presentes na interface de <code>MapaMental</code>.</li>
+</ul>
+</li>
+<li><strong>Cliente</strong>
+<ul>
+<li>manipula objetos na composição através da interface de <code>MapaMental</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="implementação">Implementação </h2>
+<h3 id="mapamental-componente">MapaMental (Componente) </h3>
+<p></p><pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-package">package</span> <span class="token namespace">mapa_mental</span><span class="token punctuation">;</span>
 
-</div><p><a href="https://mermaid.js.org/syntax/classDiagram.html">Mermaid Class Diagram</a></p>
-<h2 id="markdown-preview-enhanced">Markdown Preview Enhanced </h2>
-<p><a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/">Markdown Preview Enhanced</a></p>
-<p></p><pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">Classe</span><span class="token punctuation">{</span>
-    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-int">int</span> numero<span class="token punctuation">;</span>
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-interface">interface</span> <span class="token class-name">MapaMental</span> <span class="token punctuation">{</span>
+    
+    <span class="token class-name">String</span> <span class="token function">getTitulo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-void">void</span> <span class="token function">setTitulo</span><span class="token punctuation">(</span><span class="token class-name">String</span> titulo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-void">void</span> <span class="token function">imprimir</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> nivel<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
+
 </code></pre><p></p>
-<h3 id="html-export">HTML Export </h3>
-<p><a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/html?id=html-export">html-export</a></p>
-<p>Right click at the preview, click HTML tab.<br>
-Then choose:</p>
-<p>HTML (offline) Choose this option if you are only going to use this html file locally.<br>
-HTML (cdn hosted) Choose this option if you want to deploy your html file remotely.</p>
-<p><img src="https://user-images.githubusercontent.com/1908863/28200455-d5a12d60-6831-11e7-8572-91d3845ce8cf.png" alt="screen shot 2017-07-14 at 1 14 28 am"></p>
+<h3 id="nodemental-composição">NodeMental (Composição) </h3>
+<p></p><pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-package">package</span> <span class="token namespace">mapa_mental</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-import">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">List</span></span><span class="token punctuation">;</span>
+<span class="token keyword keyword-import">import</span> <span class="token import"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">ArrayList</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">NodeMental</span> <span class="token keyword keyword-implements">implements</span> <span class="token class-name">MapaMental</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">String</span> titulo<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MapaMental</span><span class="token punctuation">&gt;</span></span> filhos<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">NodeMental</span><span class="token punctuation">(</span><span class="token class-name">String</span> titulo<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>titulo <span class="token operator">=</span> titulo<span class="token punctuation">;</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>filhos <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MapaMental</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">anexarFilho</span><span class="token punctuation">(</span><span class="token class-name">MapaMental</span> filho<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        filhos<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>filho<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">removerFilho</span><span class="token punctuation">(</span><span class="token class-name">MapaMental</span> filho<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        filhos<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>filho<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">imprimir</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> nivel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    
+        <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> nivel<span class="token punctuation">;</span> n <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"   "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"/"</span> <span class="token operator">+</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">getTitulo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        filhos<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>f <span class="token operator">-&gt;</span> f<span class="token punctuation">.</span><span class="token function">imprimir</span><span class="token punctuation">(</span>nivel <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+        
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">String</span> <span class="token function">getTitulo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> titulo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">setTitulo</span><span class="token punctuation">(</span><span class="token class-name">String</span> titulo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>titulo <span class="token operator">=</span> titulo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    
+
+<span class="token punctuation">}</span>
+
+</code></pre><p></p>
+<h3 id="folhamental-folha">FolhaMental (Folha) </h3>
+<p></p><pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-package">package</span> <span class="token namespace">mapa_mental</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">FolhaMental</span> <span class="token keyword keyword-implements">implements</span> <span class="token class-name">MapaMental</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">String</span> titulo<span class="token punctuation">;</span>
+    <span class="token keyword keyword-private">private</span> <span class="token class-name">String</span> descricao<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">FolhaMental</span><span class="token punctuation">(</span><span class="token class-name">String</span> titulo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>titulo <span class="token operator">=</span> titulo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">imprimir</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> nivel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword keyword-for">for</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span> n <span class="token operator">=</span> nivel<span class="token punctuation">;</span> n <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"   "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"."</span> <span class="token operator">+</span> <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span><span class="token function">getTitulo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">String</span> <span class="token function">getTitulo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> titulo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">setTitulo</span><span class="token punctuation">(</span><span class="token class-name">String</span> titulo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>titulo <span class="token operator">=</span> titulo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token class-name">String</span> <span class="token function">getDescricao</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-return">return</span> descricao<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-void">void</span> <span class="token function">setDescricao</span><span class="token punctuation">(</span><span class="token class-name">String</span> descricao<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-this">this</span><span class="token punctuation">.</span>descricao <span class="token operator">=</span> descricao<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    
+<span class="token punctuation">}</span>
+
+</code></pre><p></p>
+<h3 id="cliente">Cliente </h3>
+<p></p><pre data-role="codeBlock" data-info="java" class="language-java java"><code><span class="token keyword keyword-import">import</span> <span class="token import"><span class="token namespace">mapa_mental<span class="token punctuation">.</span></span><span class="token class-name">NodeMental</span></span><span class="token punctuation">;</span>
+<span class="token keyword keyword-import">import</span> <span class="token import"><span class="token namespace">mapa_mental<span class="token punctuation">.</span></span><span class="token class-name">FolhaMental</span></span><span class="token punctuation">;</span>
+<span class="token keyword keyword-import">import</span> <span class="token import"><span class="token namespace">mapa_mental<span class="token punctuation">.</span></span><span class="token class-name">MapaMental</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-public">public</span> <span class="token keyword keyword-class">class</span> <span class="token class-name">App</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword keyword-public">public</span> <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-void">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token class-name">NodeMental</span> mapaEstudos <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">NodeMental</span><span class="token punctuation">(</span><span class="token string">"Estudos"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token class-name">NodeMental</span> mapaPPR <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">NodeMental</span><span class="token punctuation">(</span><span class="token string">"Padrões de Projeto"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+        <span class="token class-name">NodeMental</span> mapaSDT <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">NodeMental</span><span class="token punctuation">(</span><span class="token string">"Sistemas Distribuidos"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        mapaEstudos<span class="token punctuation">.</span><span class="token function">anexarFilho</span><span class="token punctuation">(</span>mapaPPR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mapaEstudos<span class="token punctuation">.</span><span class="token function">anexarFilho</span><span class="token punctuation">(</span>mapaSDT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">FolhaMental</span> folhaComposite <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">FolhaMental</span><span class="token punctuation">(</span><span class="token string">"Composite"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">FolhaMental</span> folhaAdapter <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">FolhaMental</span><span class="token punctuation">(</span><span class="token string">"Adapter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        mapaPPR<span class="token punctuation">.</span><span class="token function">anexarFilho</span><span class="token punctuation">(</span>folhaComposite<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mapaPPR<span class="token punctuation">.</span><span class="token function">anexarFilho</span><span class="token punctuation">(</span>folhaAdapter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">NodeMental</span> mapaSockets <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">NodeMental</span><span class="token punctuation">(</span><span class="token string">"Sockets"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mapaSDT<span class="token punctuation">.</span><span class="token function">anexarFilho</span><span class="token punctuation">(</span>mapaSockets<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token class-name">MapaMental</span> mapa<span class="token punctuation">;</span>
+
+        mapa <span class="token operator">=</span> mapaEstudos<span class="token punctuation">;</span>
+
+        mapa<span class="token punctuation">.</span><span class="token function">imprimir</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre><p></p>
+<h2 id="aplicabilidade">Aplicabilidade </h2>
+<p>Quando utilizar o padrão <strong>Composite</strong>:</p>
+<blockquote>
+<ul>
+<li>Quando quiser representar hierarquias partes-todo de objetos;</li>
+<li>Quando quiser que os clientes sejam capazes de ignorar a diferença entre composições<br>
+de objetos e objetos individuais. Os clientes tratarão todos os objetos na estrutura<br>
+composta de maneira uniforme.</li>
+</ul>
+</blockquote>
+<h2 id="colaborações">Colaborações </h2>
+<ul>
+<li>Os clientes usam a interface <code>MapaMental</code> para interagir com os objetos na estrutura composta. Se o receptor é uma <code>FolhaMental</code>, então a solicitação é tratada diretamente. Se o receptor é um <code>NodeMental</code>, ele normalmente repassa as solicitações para os seus componentes-filhos, executando operações adicionais antes e/ou depois do repasse.</li>
+</ul>
+<h2 id="consequências">Consequências </h2>
+<h3 id="hierarquias-compostas">Hierarquias compostas </h3>
+<p>Cria estruturas com objetos primitivos e compostos que podem se combinar recursivamente. O código do cliente pode tratar tanto objetos simples quanto compostos da mesma forma.</p>
+<h3 id="simplicidade-para-o-cliente">Simplicidade para o cliente </h3>
+<p>O cliente pode lidar de forma uniforme com objetos individuais ou compostos, sem se preocupar se está tratando com uma folha ou um componente composto.</p>
+<h3 id="facilidade-para-adicionar-novos-componentes">Facilidade para adicionar novos componentes </h3>
+<p>Novos tipos de componentes (Composite ou Leaf) são automaticamente compatíveis com a estrutura existente e o código do cliente, sem a necessidade de modificações.</p>
+<h3 id="excesso-de-generalidade">Excesso de generalidade </h3>
+<p>A adição de novos componentes pode dificultar a imposição de restrições à composição, exigindo verificações e testes em tempo de execução para garantir conformidade.</p>
 
       </div>
       
       
     
     
-    <script type="module">
-// TODO: If ZenUML gets integrated into mermaid in the future,
-//      we can remove the following lines.
-
-
-var MERMAID_CONFIG = ({"startOnLoad":false});
-if (typeof MERMAID_CONFIG !== 'undefined') {
-  MERMAID_CONFIG.startOnLoad = false
-  MERMAID_CONFIG.cloneCssStyles = false
-  MERMAID_CONFIG.theme = "default"
-}
-
-mermaid.initialize(MERMAID_CONFIG || {})
-if (typeof(window['Reveal']) !== 'undefined') {
-  function mermaidRevealHelper(event) {
-    var currentSlide = event.currentSlide
-    var diagrams = currentSlide.querySelectorAll('.mermaid')
-    for (var i = 0; i < diagrams.length; i++) {
-      var diagram = diagrams[i]
-      if (!diagram.hasAttribute('data-processed')) {
-        mermaid.init(null, diagram, ()=> {
-          Reveal.slide(event.indexh, event.indexv)
-        })
-      }
-    }
-  }
-  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
-  Reveal.addEventListener('ready', mermaidRevealHelper)
-  await mermaid.run({
-    nodes: document.querySelectorAll('.mermaid')
-  })
-} else {
-  await mermaid.run({
-    nodes: document.querySelectorAll('.mermaid')
-  })
-}
-</script>
+    
     
     
     

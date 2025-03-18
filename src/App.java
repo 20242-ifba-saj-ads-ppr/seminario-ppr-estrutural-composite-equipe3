@@ -1,5 +1,6 @@
 import mapa_mental.NodeMental;
 import mapa_mental.FolhaMental;
+import mapa_mental.MapaMental;
 
 public class App {
     
@@ -21,8 +22,10 @@ public class App {
         NodeMental mapaSockets = new NodeMental("Sockets");
         mapaSDT.anexarFilho(mapaSockets);
 
-        mapaEstudos.imprimir(0);
-        
-        
+        MapaMental mapa;
+
+        mapa = mapaEstudos;
+
+        mapa.imprimir(0);
     }
 }
