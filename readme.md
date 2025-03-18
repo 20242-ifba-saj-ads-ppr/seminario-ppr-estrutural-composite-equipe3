@@ -1,8 +1,3 @@
----
-export_on_save:
-  html: true
----
-
 # Composite (Padrão de Projeto Estrutural)
 
 ### Mapa mental
